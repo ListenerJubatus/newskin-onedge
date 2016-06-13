@@ -13,10 +13,14 @@ return function(button_list, stepstype, skin_parameters)
 	for i, button in ipairs(button_list) do
 		ret[i]= Def.Sprite{
 			Texture= tap_redir[button].." receptor (doubleres).png", InitCommand= function(self)
-			self:rotationz(rots[button] or 0):SetAllStateDelays(1)
+				self:draworder(newfield_draw_order.receptor)
+					:rotationz(rots[button] or 0):SetAllStateDelays(1)
 					:effectclock("beat"):diffuseramp()
 					:effectcolor1(1,1,1,0.5):effectcolor2(1,1,1,1)
 					:effectperiod(0.5):effecttiming(0.25,0.50,0,0.25):effectoffset(-0.25)
+			end,
+			WidthSetCommand= function(self, param)
+				param.column:set_layer_fade_type(self, "FieldLayerFadeType_Receptor")
 			end,
 			ColumnJudgmentCommand= function(self)
 				self.none = false
